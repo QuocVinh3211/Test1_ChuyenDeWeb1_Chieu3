@@ -1,0 +1,34 @@
+@media screen and (min-width: 768px) {
+    .navbar-brand {
+        padding-left: 0;
+    }
+}
+
+.rating {
+    display: block;
+    margin: 0;
+    padding: 0;
+}
+.rating li {
+    display: inline-block;
+}
+.rating li > .glyphicon-star {
+    font-size: 20px;
+}
+.glyphicon-star {
+    color: #ffc412 !important;
+}
+
+.hotel-list {
+    padding: 15px;
+}
+
+.hotel-list h1,
+.hotel-list h2,
+.hotel-list h3,
+.hotel-list h4,
+.hotel-list h5,
+.hotel-list h6 {
+    padding: 0;
+    margin: 0;
+}
