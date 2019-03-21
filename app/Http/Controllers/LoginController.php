@@ -27,14 +27,10 @@ class LoginController extends Controller
            $last_access = $getUser->last_access;
         }
         else {
-           
-           // $attempt = $attempt + 1;
-           // User::where('email' , '=', $email)->update(['attempt' => $attempt, 'last_access' => $date_now]);
            $mess = "Email không tồn tại nhé ^^!";
            return view('front-end.login', ['mess' => $mess]);
            
         }
-        // dd(session()->get('url.intended'));
 
         // neu dang nhap thanh cong
         if (Auth::attempt(['email' => $email, 'password' => $password])) {
@@ -43,7 +39,6 @@ class LoginController extends Controller
                      $mess = "Tài khoản đã bị khóa 30 phút.";
                     Auth::logout();
                     return view('front-end.login', ['mess' => $mess]);
-                    //   dd("dang nhap qua 3 lan, dang trong thoi gian khoa");
                   }
                   else { // het thoi gian khoa
                       User::where('email' , '=', $email)->update(['attempt' => 0, 'last_access' => $date_now]);
@@ -73,12 +68,3 @@ class LoginController extends Controller
         }
      }
 }
-
-
-
-//  echo "thanh cong roi" . $date_now;
-//  var_dump($user);
-
-//  else {
-//     echo "dang nhap that bai";
-// }

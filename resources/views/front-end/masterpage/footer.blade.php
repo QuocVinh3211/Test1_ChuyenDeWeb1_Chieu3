@@ -10,5 +10,6 @@
 <script type="text/javascript" src=" {{ URL::asset('public/assets/jquery-3.2.1.min.js')}}"></script>
 <script type="text/javascript" src="{{ URL::asset('public/assets/bootstrap/js/bootstrap.min.js')}}"></script>
 <script type="text/javascript" src="{{ URL::asset('public/assets/myfunction.js')}}"></script>
+<script type="text/javascript" src="{{ URL::asset('public/assets/myfunction-2.js')}}"></script>
 </body>
 </html>

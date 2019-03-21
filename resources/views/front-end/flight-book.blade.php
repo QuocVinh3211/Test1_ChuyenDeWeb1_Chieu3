@@ -7,7 +7,8 @@
             <div class="row">
                 <div class="col-md-8">
                     <form role="form" action="{{ route('postBooking') }}" method="POST">
-                    <input type="hidden" class="form-control" name="total" value="{{$total}}" name="lastName">
+                    <input type="hidden" class="form-control" name="total" value="{{$total}}">
+                    <input type="hidden" class="form-control" name="flight_de_id" value="{{$flight_de_id}}">
                     @csrf
                         <section>
                         <?php
@@ -76,13 +77,10 @@
                         <?php } ?>
                     
                         </section>
-                         <?php
-                      
-                        foreach ($flight_depature as $row) {
-                         ?>
+                        
                         <section>
-                            <h3>Passenger(s) Details</h3>
-                            <div class="panel panel-default">
+                            <h3>Passenger(s) Details</h3>                     
+                                @for($i = 0 ; $i <  $total ; $i++)                               
                             <!-- hiển thị thông báo lỗi -->
                                 @if( count($errors) > 0)
                                     <div class="alert">
@@ -92,13 +90,14 @@
                                             @endforeach
                                         </ul>
                                     </div>
-                                @endif     
+                                @endif
+                                <div class="panel panel-default">
                                 <div class="panel-body">
-                                    <h4>Passenger # </h4>
+                                    <h4>Passenger #{{$i+1}}</h4>
                                     <div class="form-group row">
                                         <div class="col-sm-3">
                                             <label class="control-label">Title:</label>
-                                            <select class="form-control" name="passenger_title">
+                                            <select class="form-control" name='passenger[{{$i}}][title]'>
                                                 <option value="mr">Mr.</option>
                                                 <option value="mrs">Mrs.</option>
                                             </select>
@@ -107,23 +106,24 @@
                                     <div class="form-group row">
                                         <div class="col-sm-6">
                                             <label class="control-label">First Name:</label>
-                                            <input type="text" name="firstName" class="form-control">
+                                            <input type="text" name='passenger[{{$i}}][first_name]' class="form-control">
                                         </div>
                                         <div class="col-sm-6">
                                             <label class="control-label">Last Name:</label>
-                                            <input type="text" class="form-control" name="lastName">
-                                        </div>
-                                         <div class="col-sm-6">
-                                            <input type="hidden" class="form-control" name="total_price" value="" name="lastName">
-                                            <input type="hidden" class="form-control" name="flight_id" value="" name="lastName">
+                                            <input type="text" name='passenger[{{$i}}][last_name]' class="form-control">
                                         </div>
                                     </div>
                                 </div>
-                       
                             </div>
+                            
+                            @endfor
                         </section>
                         <section>
                        
+                        <?php
+                      
+                        foreach ($flight_depature as $row) {
+                         ?>
                             <h3>Price Details</h3>
                             <?php
                               $id_air = $row->airways_id;
@@ -141,7 +141,7 @@
                                             <strong>Passengers Fare (x<?php echo $total ?>)</strong>
                                         </div>
                                         <div class="pull-right">
-                                            <strong name="total_price" >IDR <?php echo $row->flight_price * $total ?> </strong>
+                                            <strong name="total_price" > <?php echo $row->flight_price ?> VNĐ </strong>
                                         </div>
                                         <div class="clearfix"></div>
                                     </li>
@@ -159,7 +159,7 @@
                                             <strong>You Pay</strong>
                                         </div>
                                         <div class="pull-right">
-                                            <strong>IDR<?php echo $row->flight_price * $total ?></strong>
+                                            <strong><?php echo $row->flight_price * $total ?> VNĐ </strong>
                                         </div>
                                         <div class="clearfix"></div>
                                     </li>

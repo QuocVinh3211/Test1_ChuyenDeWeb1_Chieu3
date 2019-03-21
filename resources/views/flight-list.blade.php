@@ -7,8 +7,6 @@
     $time_from = $_GET['departure'];
  ?>
 
- 
-
 <!-- hiển thị thông báo lỗi -->
 @if( count($errors) > 0)
 	<div class="alert">
@@ -22,19 +20,23 @@
     <main> 
        <form role="form" method="get" action="{{ route('booking') }}">
        <input name="flight_class" type="hidden" value="{{ $flight_class }}">
-       <input name="total" type="hidden" value="{{ $total }}"> 
-     
+       <input name="total" type="hidden" value="{{ $total }}">
        <div class="container">
                 <section>
-                    <h2> {{ $data['get_city_from']->city_name . "(" . $data['get_city_from']->city_code . ")"  }}  <i class="glyphicon glyphicon-arrow-right"></i> 
-                    {{ $data['get_city_to']->city_name . "(" . $data['get_city_to']->city_code . ")" }}</h2>
+                    <h2> Danh sách các chuyến bay chiều đi  <i class="glyphicon glyphicon-arrow-right"></i> </h2>
                 @foreach($flight_to as $row)
+
                     <article>
                         <div class="panel panel-default">
                             <div class="panel-body">
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <h4><strong><a href="flight-detail.html"> {{ $row->airways_name  }} </a></strong></h4>
+                                    <?php
+                                        // hien thi hang hang khogn theo id
+                                        $id_air = $row->airways_id;
+                                        $airway_name = DB::table('airways')->where('airways_id', '=', $id_air)->first();
+                                     ?>
+                                        <h4><strong><a href="flight-detail.html"> {{ $airway_name->airways_name  }} </a></strong></h4>
                                         <div class="row">
                                             <div class="col-sm-3">
                                                 <label class="control-label">From:</label>
@@ -43,16 +45,22 @@
                                                     $d    = strtotime($date);
                                                     $date_to = $row->flight_time_to;
                                                     $d2    = strtotime($date_to);
+
+                                                    // hien thi ten thanh pho theo id
+                                                    $id = $row->flight_city_from_id;
+                                                    $city = DB::table('list_cities')->where('city_id', '=', $id)->first();
+                                                    $id_to = $row->flight_city_to_id;
+                                                    $city_to = DB::table('list_cities')->where('city_id', '=', $id_to)->first();
                                                  ?>
                                                 <div><big class="time"> <?php echo date("h:i", $d);  ?> </big></div>
-                                                <div><span class="place"> {{ $data['get_city_from']->city_name . "(" . $data['get_city_from']->city_code . ")"  }}    </span></div>
+                                                <div><span class="place"> {{ $city->city_name . " (" . $city->city_code . ")" }}    </span></div>
                                             </div>
                                             <div class="col-sm-3">
                                                 <label class="control-label">To:</label>
                                                 <div><big class="time"> <?php echo date("h:i", $d2);  ?> </big></div>
 
                                 
-                                                <div><span class="place">{{ $data['get_city_to']->city_name . "(" . $data['get_city_to']->city_code . ")" }}</span></div>
+                                                <div><span class="place">{{ $city_to->city_name . " (" . $city_to->city_code . ")" }}</span></div>
                                             </div>
                                             <div class="col-sm-3">
                                                 <label class="control-label">Duration:</label>
@@ -74,9 +82,7 @@
                                                 <div><strong class="text-danger"> Transit</strong></div>
                                             </div>
                                             <div class="col-sm-3 text-right">
-                                            <!-- tính giá tiền theo ngày đặt vé -->
-                          
-                                                <h3 class="price text-danger"><strong><?php echo number_format($row->flight_price) ?> VNĐ</strong></h3>
+                                                <h3 class="price text-danger"><strong>IDR <?php echo $row->flight_price  ?></strong></h3>
                                                 <div>
                                                 <a href="{{ asset('flight-detail/'.$row->flight_id.'/'.$total.'/'.$flight_class.'/'.$time_from) }}" class="btn btn-link">See Detail</a>
                                                     <input id="rad_depature" name="flight_depature" value="{{ $row->flight_id }}"  type="radio" {{ old('flight_depature') == $row->flight_id ? 'checked' : ''}}  >
@@ -111,15 +117,19 @@
     @if($flight_return != "")
     <div class="container">
                 <section>
-                <h2> {{ $data['get_city_from_re']->city_name . "(" . $data['get_city_from_re']->city_code . ")"  }}  <i class="glyphicon glyphicon-arrow-right"></i> 
-                    {{ $data['get_city_to_re']->city_name . "(" . $data['get_city_to_re']->city_code . ")" }}</h2>
+                    <h2> Danh sách các chuyến bay chiều về  <i class="glyphicon glyphicon-arrow-right"></i> </h2>
                 @foreach($flight_return as $row)
                     <article>
                         <div class="panel panel-default">
                             <div class="panel-body">
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <h4><strong><a href="flight-detail.html"> {{ $row->airways_name  }} </a></strong></h4>
+                                    <?php
+                                        // hien thi hang hang khogn theo id
+                                        $id_air = $row->airways_id;
+                                        $airway_name = DB::table('airways')->where('airways_id', '=', $id_air)->first();
+                                     ?>
+                                        <h4><strong><a href="flight-detail.html"> {{ $airway_name->airways_name  }} </a></strong></h4>
                                         <div class="row">
                                             <div class="col-sm-3">
                                                 <label class="control-label">From:</label>
@@ -128,16 +138,22 @@
                                                     $d    = strtotime($date);
                                                     $date_to = $row->flight_time_to;
                                                     $d2    = strtotime($date_to);
+
+                                                    // hien thi ten thanh pho theo id
+                                                    $id = $row->flight_city_from_id;
+                                                    $city = DB::table('list_cities')->where('city_id', '=', $id)->first();
+                                                    $id_to = $row->flight_city_to_id;
+                                                    $city_to = DB::table('list_cities')->where('city_id', '=', $id_to)->first();
                                                  ?>
                                                 <div><big class="time"> <?php echo date("h:i", $d);  ?> </big></div>
-                                                <div><span class="place"> {{ $data['get_city_from_re']->city_name . "(" . $data['get_city_from_re']->city_code . ")"  }}    </span></div>
+                                                <div><span class="place"> {{ $city->city_name . " (" . $city->city_code . ")" }}    </span></div>
                                             </div>
                                             <div class="col-sm-3">
                                                 <label class="control-label">To:</label>
                                                 <div><big class="time"> <?php echo date("h:i", $d2);  ?> </big></div>
 
                                 
-                                                <div><span class="place">{{ $data['get_city_from_re']->city_name . "(" . $data['get_city_from_re']->city_code . ")"  }}</span></div>
+                                                <div><span class="place">{{ $city_to->city_name . " (" . $city_to->city_code . ")" }}</span></div>
                                             </div>
                                             <div class="col-sm-3">
                                                 <label class="control-label">Duration:</label>
@@ -159,7 +175,7 @@
                                                 <div><strong class="text-danger"> Transit</strong></div>
                                             </div>
                                             <div class="col-sm-3 text-right">
-                                                <h3 class="price text-danger"><strong><?php echo number_format($row->flight_price)  ?>VNĐ</strong></h3>
+                                                <h3 class="price text-danger"><strong>IDR <?php echo $row->flight_price  ?></strong></h3>
                                                 <div>
                                                 <a href="{{ asset('flight-detail/'.$row->flight_id.'/'.$total.'/'.$flight_class.'/'.$time_from) }}" class="btn btn-link">See Detail</a>
                                                 <!-- <a href="#" id="choose" onclick="BookFunction()" class="btn btn-primary">Choose</a> -->

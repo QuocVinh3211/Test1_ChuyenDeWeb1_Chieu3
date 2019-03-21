@@ -2,38 +2,45 @@
 @section('content')
 <main>
      <?php
+     $total = 1;
+     $flight_class = "keka";
+     $time_from   = "20/10/1998";
         foreach ($flight as $row) {
             // cắt ngày giờ:
             $date = $row->flight_time_from;
             $d    = strtotime($date);
             $date_to = $row->flight_time_to;
             $d2    = strtotime($date_to);
+
      ?>
         <div class="container">
             <section>
-            <h2> {{ $data['get_city_from']->city_name . "(" . $data['get_city_from']->city_code . ")"  }}  <i class="glyphicon glyphicon-arrow-right"></i> 
-                    {{ $data['get_city_to']->city_name . "(" . $data['get_city_to']->city_code . ")" }}</h2>
+                <h2> {{ $data['get_city_from']->city_name . " (" . $data['get_city_from']->city_code . ")" }}  <i class="glyphicon glyphicon-arrow-right"></i> {{ $data['get_city_to']->city_name . " (" . $data['get_city_to']->city_code . ")" }} </h2>
                 <article>
                     <div class="panel panel-default">
                         <div class="panel-body">
                             <div class="row">
                                 <div class="col-md-12">
-                                        <h4><strong><a href="flight-detail.html">{{ $row->airways_name  }} </a></strong></h4>
+                                
+                                        <h4><strong><a href="flight-detail.html">{{ $data['get_airline']->airways_name }} </a></strong></h4>
                                     <div class="row">
+                                    
+
+
                                         <div class="col-sm-3">
                                             <label class="control-label">From:</label>
                                             <div><big class="time"><?php echo date("h:i", $d); ?></big></div>
-                                            <div><span class="place">{{ $data['get_city_from']->city_name . "(" . $data['get_city_from']->city_code . ")"  }}  </span></div>
+                                            <div><span class="place">{{ $data['get_city_from']->city_name . " (" . $data['get_city_from']->city_code . ")" }} </span></div>
                                         </div>
                                         <div class="col-sm-3">
                                             <label class="control-label">To:</label>
                                             <div><big class="time"><?php echo date("h:i", $d2); ?></big></div>
-                                            <div><span class="place">{{ $data['get_city_to']->city_name . "(" . $data['get_city_to']->city_code . ")" }}</span></div>
+                                            <div><span class="place">{{ $data['get_city_to']->city_name . " (" . $data['get_city_to']->city_code . ")" }} </span></div>
                                         </div>
                                         <div class="col-sm-3">
                                             <label class="control-label">Duration:</label>
                                             <div><big class="time">
-                                                   <?php
+                                             <?php
 
                                              $date1 = $row->flight_time_from;
                                              $date2 = $row->flight_time_to;
@@ -50,16 +57,16 @@
                                             <div><strong class="text-danger">1 Transit</strong></div>
                                         </div>
                                         <div class="col-sm-3 text-right">
-                                            <h3 class="price text-danger"><strong><?php echo number_format($row->flight_price) ?>VNĐ</strong></h3>
+                                            <h3 class="price text-danger"><strong><?php echo number_format($row->flight_price) ?> VNĐ</strong></h3>
                                             <div>
-                                           <!-- flight-booking-2?flight_class=Economy&total=2&flight_depature=7&flight_return=0 -->
-                                                <a href="{{ asset('flight-booking/'.$row->flight_id.'/'.$total.'/'.$flight_class.'/'.$time_from) }}" class="btn btn-primary">Choose</a>
+                                           
                                             </div>
                                         </div>
                                     </div>
                                     <ul class="nav nav-tabs">
                                         <li class="active"><a data-toggle="tab" href="#flight-detail-tab">Flight Details</a></li>
                                         <li><a data-toggle="tab" href="#flight-price-tab">Price Details</a></li>
+                                        <li><a data-toggle="tab" href="#flight-passenger-tab">Passenger</a></li>
                                     </ul>
                                     <div class="tab-content">
                                         <div id="flight-detail-tab" class="tab-pane fade in active">
@@ -77,7 +84,7 @@
                                                                     <div><small class="date"><?php echo $time_from ?></small></div>
                                                                 </div>
                                                                 <div class="col-sm-6">
-                                                                    <div><span class="place">{{ $data['get_city_from']->city_name . "(" . $data['get_city_from']->city_code . ")"  }}  </span></div>
+                                                                    <div><span class="place">{{ $data['get_city_from']->city_name . " (" . $data['get_city_from']->city_code . ")" }} </span></div>
                                                                     <div><small class="airport">Airport</small></div>
                                                                 </div>
                                                             </div>
@@ -92,7 +99,7 @@
                                                                     <div><small class="date"><?php echo $time_from ?></small></div>
                                                                 </div>
                                                                 <div class="col-sm-6">
-                                                                    <div><span class="place">{{ $data['get_city_to']->city_name . "(" . $data['get_city_to']->city_code . ")" }}</span></div>
+                                                                    <div><span class="place">{{ $data['get_city_to']->city_name . " (" . $data['get_city_to']->city_code . ")" }} </span></div>
                                                                     <div><small class="airport"> Airport</small></div>
                                                                 </div>
                                                             </div>
@@ -103,12 +110,13 @@
                                                         </div>
                                                     </div>
                                                 </li>
-                                                <li class="list-group-item list-group-item-warning">
+                                               
+                                                <!-- <li class="list-group-item list-group-item-warning">
                                                 
                                                     <ul>
                                                         <li>Transit for 1h 30m in Doha (DOH)</li>
                                                     </ul>
-                                                </li>
+                                                </li> -->
                                               <!--   <li class="list-group-item">
                                                     <h5>
                                                         <strong class="airline">Qatar Airways QR-1052</strong>
@@ -152,7 +160,7 @@
                                         </div>
                                         <div id="flight-price-tab" class="tab-pane fade">
                                             <h5>
-                                                <strong class="airline"><?php echo $row->airways_named?></strong>
+                                                <strong class="airline"><?php echo $row->airways_id ?></strong>
                                                 <p><span class="flight-class"><?php echo $flight_class ?></span></p>
                                             </h5>
                                             <ul class="list-group">
@@ -161,7 +169,7 @@
                                                         <strong>Passengers Fare (x<?php echo $total ?>)</strong>
                                                     </div>
                                                     <div class="pull-right">
-                                                        <strong> <?php echo number_format($row->flight_price*$total) ?> VNĐ </strong>
+                                                        <strong> tiền </strong>
                                                     </div>
                                                     <div class="clearfix"></div>
                                                 </li>
@@ -179,12 +187,40 @@
                                                         <strong>You Pay</strong>
                                                     </div>
                                                     <div class="pull-right">
-                                                        <strong><?php echo number_format($row->flight_price*$total)  ?>VNĐ</strong>
+                                                        <strong>IDR <?php echo ($row->flight_price*$total) ?></strong>
                                                     </div>
                                                     <div class="clearfix"></div>
                                                 </li>
                                             </ul>
                                         </div>
+
+                                        <!-- hiển thị passenger -->
+                                        <div id="flight-passenger-tab" class="tab-pane fade">
+                                            <ul class="list-group">
+                                                <li class="list-group-item">
+                                                    <div class="pull-left">
+                                                        <strong>Passengers Fare (x<?php echo $total ?>)</strong>
+                                                    </div>
+                                                    <div class="clearfix"></div>
+                                                </li>
+                                                @foreach($passenger as $row)
+                                                <li class="list-group-item list-group-item-info">
+                                                
+                                                    <div class="pull-left">
+                                                        <strong> {{ $row->passenger_title . " " .  $row->passenger_first_name . " " . $row->passenger_last_name }} </strong>
+                                                    </div>
+                                                    <div class="pull-right">
+                                                        <strong> <a href="{{ URL::route('getPassenger',  $row->passenger_id) }}"> <i class='fas fa-edit' style='font-size:18px;color:red'></i> Edit </a> </strong>
+                                                    </div>
+                                                    <div class="clearfix"></div>
+                                                
+                                                </li>
+                                                @endforeach
+                                            </ul>
+                                        </div>
+
+                                        <!-- // passenger -->
+
                                     </div>
                                 </div>
                             </div>

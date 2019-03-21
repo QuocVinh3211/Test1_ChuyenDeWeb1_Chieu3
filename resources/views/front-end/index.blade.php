@@ -5,6 +5,11 @@
         <div class="container">
             <section>
                 <h3>Flight Booking</h3>
+                @if (session('status'))
+                    <div class="alert alert-success">
+                        {{ session('status') }}
+                    </div>
+                @endif
                 <div class="panel panel-default">
                     <div class="panel-body">
                         <form role="form" action="{{ route('search') }}" onsubmit="return validateForm();" >

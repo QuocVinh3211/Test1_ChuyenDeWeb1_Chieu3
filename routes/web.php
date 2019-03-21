@@ -15,12 +15,11 @@ date_default_timezone_set("Asia/Ho_Chi_Minh");
 // trang index
 Route::get('/', 'FlightController@getList')->name('/');
 
-
 // auth route
 Auth::routes();
 
 // goi sau khi login
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home', 'FlightController@getList')->name('home');
 Route::post('postLogin', 'LoginController@authenticate')->name('postlogin');
 
 // search flights
@@ -37,8 +36,35 @@ Route::get('flight-booking-2', 'FlightController@booking_2')->name('booking');
 
 //get view edit user
 Route::get('getEdit', 'UserController@getEdit')->name('getEdit');
-Route::POST('postEdit', 'UserController@postEdit')->name('postEdit');
+Route::post('postEdit', 'UserController@postEdit')->name('postEdit');
 
 // dat ve
-Route::POST('postBooking', 'FlightController@postBooking')->name('postBooking');
+Route::post('postBooking', 'FlightController@postBooking')->name('postBooking');
 
+
+//================TEST 2==================
+
+// hiển thị danh sách các sân bay
+Route::get('getListAirport', 'HomeController@getListAirport')->name('listAirport'); 
+
+// hiển thị danh sách các hãng bay
+Route::get('getListAirline', 'HomeController@listAirline')->name('listAirline');
+
+// thêm chuyến bay
+Route::get('getAddFlight', 'FlightController@getAdd')->name('addFlight');
+Route::post('postAddFlight', 'FlightController@postAdd')->name('postFlight');
+
+// Quản lí danh sách vé đã đặt
+Route::get('getViewBooked', 'UserController@getViewBook')->name('viewBook');
+
+// xem chi tiết vé đã đặt
+Route::get('getDetailBook', 'UserController@getDetailBook')->name('getDetailBook');
+
+// xóa vé đã đặt
+Route::get('deleteBooked/{idBook}', 'UserController@deleteBooked')->name('deleteBooked');
+
+// hiển thị danh sách passenger theo id
+Route::get('getPassenger/{idPassenger}', 'UserController@getPassenger')->name('getPassenger');
+
+// sửa thông tin passenger
+Route::post('postEditPassenger', 'UserController@postEditPassenger')->name('postEditPassenger');
